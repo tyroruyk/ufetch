@@ -22,15 +22,14 @@ def uptime_in_linux():
     uptime_min = int((uptime % 3600) / 60)
     uptime_sec = int(uptime % 60)
 
-    return f"{uptime_hour}:{uptime_min}:{uptime_sec}"
+    return f"{uptime_hour}:{uptime_min:02}:{uptime_sec:02}"
 
 def ram_usage_in_linux():
     if os_name == 'Linux':
         ram_usage = os.popen('free -m | grep Mem | awk \'{print $3/$2 * 100.0}\'').read()
         ram_usage = ram_usage.strip()
         return ram_usage
-    else:
-        return 'Unknown'
+    return 'Unknown'
 
 def get_local_time_zone():
     if os_name == 'Linux':
@@ -41,24 +40,21 @@ def get_local_time_zone():
         tz = os.popen('systemsetup -gettimezone').read()
         tz = tz.strip()
         return tz
-    else:
-        return 'Unknown'
+    return 'Unknown'
 
 def default_shell_in_linux():
     if os_name == 'Linux':
         shell = os.popen('echo $SHELL').read()
         shell = shell.strip()
         return shell
-    else:
-        return 'Unknown'
+    return 'Unknown'
 
 def processor_usage_linux():
     if os_name == 'Linux':
         cpu_usage = os.popen('top -bn1 | grep "Cpu(s)" | awk -F" " \'{print $2 + $4}\'').read()
         cpu_usage = cpu_usage.strip()
         return cpu_usage
-    else:
-        return 'Unknown'
+    return 'Unknown'
 
 de = str(os.environ.get('DESKTOP_SESSION'))
 de = de.upper()
@@ -78,11 +74,4 @@ if __name__ == "__main__":
     f.write(f"   Shell: {default_shell_in_linux()}\n\n")
     f.write(f"   Uptime: {uptime_in_linux()}\n\n")
     
-    
-
     f.close()
-
-    
-
-
-
