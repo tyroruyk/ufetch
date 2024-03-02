@@ -1,5 +1,17 @@
-# Ufetch
-System fetch tool for linux-based system, written in Rust
+<p align="center">
+  <h2 align="center">Ufetch</h2>
+
+  <p align="center">
+    System fetch tool for linux-based system, written in Rust
+    <br/>
+    <br/>
+    <a href="https://github.com/avishekdutta531/ufetch/issues">Report Bug</a>
+    .
+    <a href="https://github.com/avishekdutta531/ufetch/issues">Request Feature</a>
+  </p>
+</p>
+
+<br/>
 
 ![ufetch](img/screenshot.png)
 
