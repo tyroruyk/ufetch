@@ -1,5 +1,5 @@
-use std::process::{Command, exit};
 use std::io;
+use std::process::{exit, Command};
 
 pub fn get_kernel() -> io::Result<String> {
     // Run the uname -r command and capture its output

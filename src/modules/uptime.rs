@@ -7,7 +7,10 @@ pub fn get_uptime() -> io::Result<String> {
 
     // Parse the uptime value from the string
     let uptime_secs: f64 = uptime_str.trim().parse().map_err(|e| {
-        io::Error::new(io::ErrorKind::InvalidData, format!("Failed to parse uptime: {}", e))
+        io::Error::new(
+            io::ErrorKind::InvalidData,
+            format!("Failed to parse uptime: {}", e),
+        )
     })?;
 
     // Calculate days, hours, and minutes

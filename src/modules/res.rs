@@ -1,10 +1,9 @@
-use std::process::Command;
 use std::io;
+use std::process::Command;
 
 pub fn get_res() -> io::Result<String> {
     // Run the xrandr command and capture its output
-    let output = Command::new("xrandr")
-        .output();
+    let output = Command::new("xrandr").output();
 
     // Check if the command was successful
     match output {
@@ -19,7 +18,10 @@ pub fn get_res() -> io::Result<String> {
 
                 return Ok(resolution.unwrap_or("N/A").to_string());
             } else {
-                return Err(io::Error::new(io::ErrorKind::NotFound, "Primary display resolution not found"));
+                return Err(io::Error::new(
+                    io::ErrorKind::NotFound,
+                    "Primary display resolution not found",
+                ));
             }
         }
         Err(error) => {
@@ -29,4 +31,3 @@ pub fn get_res() -> io::Result<String> {
         }
     }
 }
-

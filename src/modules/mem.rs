@@ -25,7 +25,12 @@ pub fn get_mem() -> io::Result<String> {
     let used_mem = mem_total.saturating_sub(mem_free);
 
     // Return UsedMem as a string
-    Ok(format!("{}MiB of {}MiB ({}%)", used_mem/1024, mem_total/1024, (used_mem * 100)/mem_total))
+    Ok(format!(
+        "{}MiB of {}MiB ({}%)",
+        used_mem / 1024,
+        mem_total / 1024,
+        (used_mem * 100) / mem_total
+    ))
 }
 
 fn parse_memory_value(line: &str) -> u64 {

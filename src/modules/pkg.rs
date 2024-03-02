@@ -1,6 +1,6 @@
-use std::process::Command;
-use std::path::Path;
 use std::io;
+use std::path::Path;
+use std::process::Command;
 
 pub fn get_pkg() -> io::Result<String> {
     let mut result = String::new();
@@ -20,7 +20,10 @@ pub fn get_pkg() -> io::Result<String> {
             .arg(format!("flatpak list | wc -l"))
             .output()?;
 
-        result += &format!("{} (flatpak) ", String::from_utf8_lossy(&output.stdout).trim());
+        result += &format!(
+            "{} (flatpak) ",
+            String::from_utf8_lossy(&output.stdout).trim()
+        );
     }
 
     if Path::new("/bin/pacman").exists() {
@@ -29,9 +32,12 @@ pub fn get_pkg() -> io::Result<String> {
             .arg(format!("pacman -Qq | wc -l"))
             .output()?;
 
-        result += &format!("{} (pacman) ", String::from_utf8_lossy(&output.stdout).trim());
+        result += &format!(
+            "{} (pacman) ",
+            String::from_utf8_lossy(&output.stdout).trim()
+        );
     }
-    
+
     if Path::new("/var/lib/rpm").exists() {
         let output = Command::new("sh")
             .arg("-c")
@@ -40,7 +46,7 @@ pub fn get_pkg() -> io::Result<String> {
 
         result += &format!("{} (rpm) ", String::from_utf8_lossy(&output.stdout).trim());
     }
-    
+
     if Path::new("/bin/snap").exists() {
         let output = Command::new("sh")
             .arg("-c")
@@ -49,8 +55,6 @@ pub fn get_pkg() -> io::Result<String> {
 
         result += &format!("{} (snap) ", String::from_utf8_lossy(&output.stdout).trim());
     }
-
-
 
     Ok(result)
 }
