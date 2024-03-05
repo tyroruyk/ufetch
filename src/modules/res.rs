@@ -1,5 +1,5 @@
+use std::process::{Command, exit};
 use std::io;
-use std::process::Command;
 
 pub fn get_res() -> io::Result<String> {
     // Run the xrandr command and capture its output
@@ -14,20 +14,20 @@ pub fn get_res() -> io::Result<String> {
             // Find the line containing the primary display resolution
             if let Some(line) = output_str.lines().find(|line| line.contains("*+")) {
                 // Extract the resolution from the line
-                let resolution = line.split_whitespace().next_back();
-
-                return Ok(resolution.unwrap_or("N/A").to_string());
-            } else {
-                return Err(io::Error::new(
-                    io::ErrorKind::NotFound,
-                    "Primary display resolution not found",
-                ));
+                if let Some(resolution) = line.split_whitespace().find(|&word| word.contains('x')) {
+                    return Ok(resolution.to_string());
+                }
             }
+
+            Err(io::Error::new(
+                io::ErrorKind::NotFound,
+                "Primary display resolution not found",
+            ))
         }
         Err(error) => {
-            // Print the error and return N/A
-            eprintln!("{}", error);
-            Ok("N/A".to_string())
+            // Print the error and exit the program
+            eprintln!("Failed to execute xrandr command: {}", error);
+            exit(1);
         }
     }
 }

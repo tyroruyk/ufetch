@@ -20,6 +20,8 @@ mod sh;
 mod up;
 #[path = "modules/user.rs"]
 mod user;
+#[path = "modules/disk.rs"]
+mod disk;
 
 pub fn info() {
     match (user::get_user(), host::get_host()) {
@@ -68,5 +70,9 @@ pub fn info() {
 
     if let Ok(memory) = mem::get_mem() {
         println!("Memory    : {}", memory);
+    }
+
+    if let Ok(disk) = disk::get_disk() {
+        println!("Disk      : {}", disk);
     }
 }

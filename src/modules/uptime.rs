@@ -1,23 +1,30 @@
-use std::fs::read_to_string;
+use std::process::{Command, exit};
 use std::io;
 
 pub fn get_uptime() -> io::Result<String> {
-    // Read the content of /proc/uptime into a string
-    let uptime_str = read_to_string("/proc/uptime")?;
+    // Run the uptime -p command and capture its output
+    let output = Command::new("uptime").arg("-p").output();
 
-    // Parse the uptime value from the string
-    let uptime_secs: f64 = uptime_str.trim().parse().map_err(|e| {
-        io::Error::new(
-            io::ErrorKind::InvalidData,
-            format!("Failed to parse uptime: {}", e),
-        )
-    })?;
+    // Check if the command was successful
+    match output {
+        Ok(output) => {
+            // Convert the output to a string
+            let output_str = String::from_utf8_lossy(&output.stdout);
 
-    // Calculate days, hours, and minutes
-    let days = (uptime_secs / (24.0 * 3600.0)).floor() as u64;
-    let hours = ((uptime_secs % (24.0 * 3600.0)) / 3600.0).floor() as u64;
-    let minutes = ((uptime_secs % 3600.0) / 60.0).floor() as u64;
+            // Extract the remaining text after 'up'
+            if let Some(remaining_text) = output_str.strip_prefix("up") {
+                return Ok(remaining_text.trim().to_string());
+            }
 
-    // Format the result as "days, hours, minutes"
-    Ok(format!("{}, {}, {}", days, hours, minutes))
+            Err(io::Error::new(
+                io::ErrorKind::NotFound,
+                "Invalid 'uptime -p' output format",
+            ))
+        }
+        Err(error) => {
+            // Print the error and exit the program
+            eprintln!("Failed to execute uptime command: {}", error);
+            exit(1);
+        }
+    }
 }
