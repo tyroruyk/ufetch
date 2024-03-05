@@ -39,7 +39,7 @@ installation_prompt() {
 }
 
 main() {
-    if test -f "${DIR}/findex"; then
+    if test -f "${DIR}/ufetch"; then
         while true; do
             read -r -p "Found existing installation. Do you want to uninstall it? [Y/N] " yn
             case $yn in
