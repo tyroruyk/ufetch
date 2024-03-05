@@ -2,10 +2,6 @@
 
 readonly DIR="/usr/bin"
 
-RED='\033[1;31m'
-GREEN='\033[0;32m'
-NC='\033[0m'
-
 installation() {
     echo "Installing Ufetch..."
 
@@ -15,14 +11,14 @@ installation() {
     echo "Copying Files..."
     sudo cp target/release/ufetch ${DIR}/ufetch
 
-    echo "${GREEN}Installation Done!{$NC}"
+    echo "Installation Done!"
 }
 
 uninstallation() {
     echo "Removing Files..."
 
     sudo rm ${DIR}/ufetch
-    echo "${RED}Uninstallation Done!{$NC}"
+    echo "Uninstallation Done"
 }
 
 installation_prompt() {
