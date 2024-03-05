@@ -3,5 +3,5 @@
 version = 3
 
 [[package]]
-name = "fetch_tool"
-version = "0.1.0"
+name = "ufetch"
+version = "0.1.1"
