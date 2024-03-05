@@ -32,7 +32,7 @@ pub fn get_disk() -> io::Result<String> {
                         // Return the storage information as a formatted string
                         return Ok(format!(
                             "{:.2}GiB of {:.2}GiB ({})",
-                            total_gib, used_gib, usage
+                            used_gib, total_gib, usage
                         ));
                     }
                 }
