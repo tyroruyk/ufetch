@@ -11,28 +11,36 @@ pub fn get_disk() -> io::Result<String> {
             // Convert the output to a string
             let output_str = String::from_utf8_lossy(&output.stdout);
 
-            // Extract the filesystem and usage information
+            // Extract the filesystem and space information
             if let Some(line) = output_str.lines().nth(1) {
                 // Split the line into columns
                 let columns: Vec<&str> = line.split_whitespace().collect();
 
                 // Check if the columns have the expected format
-                if columns.len() >= 5 {
-                    let size = columns[1];
-                    let used = columns[2];
-                    let usage_percentage = columns[4];
+                if columns.len() >= 4 {
+                    let total_space = columns[1];
+                    let used_space = columns[2];
+                    let usage = columns[4];
 
-                    // Return disk usage information as a formatted string
-                    return Ok(format!(
-                        "{} of {} ({})",
-                        size, used, usage_percentage
-                    ));
+                    // Parse the sizes in KiB and convert them to GiB
+                    if let (Ok(total_kib), Ok(used_kib)) =
+                        (total_space.parse::<f64>(), used_space.parse::<f64>())
+                    {
+                        let total_gib = total_kib / (1024.0 * 1024.0);
+                        let used_gib = used_kib / (1024.0 * 1024.0);
+
+                        // Return the storage information as a formatted string
+                        return Ok(format!(
+                            "{:.2}GiB of {:.2}GiB ({})",
+                            total_gib, used_gib, usage
+                        ));
+                    }
                 }
             }
 
             Err(io::Error::new(
                 io::ErrorKind::NotFound,
-                "Disk usage information not found",
+                "Storage information not found",
             ))
         }
         Err(error) => {
