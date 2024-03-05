@@ -15,6 +15,17 @@
 
 ![ufetch](img/screenshot.png)
 
+### Installation
+#### Requirements
+* Rust (building from source)
+####
+```
+git clone https://github.com/tyroruyk/ufetch.git
+cd ufetch
+chmod +x installer.sh
+sudo ./installer.sh
+```
+
 ### Disclaimer
 > This project is still <b>under development</b>. If you get any kind of problem, you are welcome to create an [issue!](https://github.com/avishekdutta531/Ufetch/issues)
 
