@@ -45,7 +45,7 @@ pub fn info() {
     }
     
     if let Ok(machine) = machine::get_machine() {
-        println!("Host    : {}", machine);
+        println!("Host      : {}", machine);
     }
 
     if let Ok(uptime) = up::get_uptime() {
