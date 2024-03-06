@@ -5,9 +5,9 @@
     System fetch tool for linux-based system, written in Rust
     <br/>
     <br/>
-    <a href="https://github.com/avishekdutta531/ufetch/issues">Report Bug</a>
+    <a href="https://github.com/tyroruyk/ufetch/issues">Report Bug</a>
     .
-    <a href="https://github.com/avishekdutta531/ufetch/issues">Request Feature</a>
+    <a href="https://github.com/tyroruyk/ufetch/issues">Request Feature</a>
   </p>
 </p>
 
