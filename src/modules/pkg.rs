@@ -10,8 +10,10 @@ pub fn get_pkg() -> io::Result<String> {
             .arg("-c")
             .arg(format!("dpkg --get-selections | wc -l"))
             .output()?;
-
-        result += &format!("{} (dpkg) ", String::from_utf8_lossy(&output.stdout).trim());
+        
+        if String::from_utf8_lossy(&output.stdout).trim().parse::<i32>().unwrap() != 0 {
+            result += &format!("{} (dpkg) ", String::from_utf8_lossy(&output.stdout).trim());
+        }
     }
 
     if Path::new("/bin/flatpak").exists() {
@@ -20,10 +22,9 @@ pub fn get_pkg() -> io::Result<String> {
             .arg(format!("flatpak list | wc -l"))
             .output()?;
 
-        result += &format!(
-            "{} (flatpak) ",
-            String::from_utf8_lossy(&output.stdout).trim()
-        );
+        if String::from_utf8_lossy(&output.stdout).trim().parse::<i32>().unwrap() != 0 {
+            result += &format!("{} (flatpak) ", String::from_utf8_lossy(&output.stdout).trim());
+        }
     }
 
     if Path::new("/bin/pacman").exists() {
@@ -32,10 +33,9 @@ pub fn get_pkg() -> io::Result<String> {
             .arg(format!("pacman -Qq | wc -l"))
             .output()?;
 
-        result += &format!(
-            "{} (pacman) ",
-            String::from_utf8_lossy(&output.stdout).trim()
-        );
+        if String::from_utf8_lossy(&output.stdout).trim().parse::<i32>().unwrap() != 0 {
+            result += &format!("{} (pacman) ", String::from_utf8_lossy(&output.stdout).trim());
+        }
     }
 
     if Path::new("/var/lib/rpm").exists() {
@@ -44,7 +44,9 @@ pub fn get_pkg() -> io::Result<String> {
             .arg(format!("rpm -qa | wc -l"))
             .output()?;
 
-        result += &format!("{} (rpm) ", String::from_utf8_lossy(&output.stdout).trim());
+        if String::from_utf8_lossy(&output.stdout).trim().parse::<i32>().unwrap() != 0 {
+            result += &format!("{} (rpm) ", String::from_utf8_lossy(&output.stdout).trim());
+        }
     }
 
     if Path::new("/bin/snap").exists() {
@@ -53,7 +55,9 @@ pub fn get_pkg() -> io::Result<String> {
             .arg(format!("snap list | wc -l"))
             .output()?;
 
-        result += &format!("{} (snap) ", String::from_utf8_lossy(&output.stdout).trim());
+        if String::from_utf8_lossy(&output.stdout).trim().parse::<i32>().unwrap() != 0 {
+            result += &format!("{} (snap) ", String::from_utf8_lossy(&output.stdout).trim());
+        }
     }
 
     Ok(result)

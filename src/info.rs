@@ -22,6 +22,8 @@ mod up;
 mod user;
 #[path = "modules/disk.rs"]
 mod disk;
+#[path = "modules/gpu.rs"]
+mod gpu;
 
 pub fn info() {
     match (user::get_user(), host::get_host()) {
@@ -57,15 +59,19 @@ pub fn info() {
     if let Ok(resolution) = res::get_res() {
         println!("Resolution: {}", resolution);
     }
-
-    println!();
-
+    
     if let Ok(packages) = pkg::get_pkg() {
         println!("Packages  : {}", packages);
     }
 
+    println!();
+
     if let Ok(cpu_model) = cpu::get_cpu() {
         println!("CPU       : {}", cpu_model);
+    }
+    
+    if let Ok(gpu_model) = gpu::get_gpu() {
+        println!("GPU       : {}", gpu_model);
     }
 
     if let Ok(memory) = mem::get_mem() {
