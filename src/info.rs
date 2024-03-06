@@ -24,13 +24,15 @@ mod user;
 mod disk;
 #[path = "modules/gpu.rs"]
 mod gpu;
+#[path = "modules/machine.rs"]
+mod machine;
 
 pub fn info() {
     match (user::get_user(), host::get_host()) {
         (Ok(user), Ok(hostname)) => {
             println!("            {}@{}", user, hostname);
         }
-        (Err(err), _) => eprintln!("Error getting OS: {}", err),
+        (Err(err), _) => eprintln!("Error getting user: {}", err),
         (_, Err(err)) => eprintln!("Error getting hostname: {}", err),
     }
 
@@ -40,6 +42,10 @@ pub fn info() {
 
     if let Ok(kernel) = kernel::get_kernel() {
         println!("Kernel    : {}", kernel);
+    }
+    
+    if let Ok(machine) = machine::get_machine() {
+        println!("Host    : {}", machine);
     }
 
     if let Ok(uptime) = up::get_uptime() {
@@ -59,7 +65,7 @@ pub fn info() {
     if let Ok(resolution) = res::get_res() {
         println!("Resolution: {}", resolution);
     }
-    
+
     if let Ok(packages) = pkg::get_pkg() {
         println!("Packages  : {}", packages);
     }
@@ -69,7 +75,7 @@ pub fn info() {
     if let Ok(cpu_model) = cpu::get_cpu() {
         println!("CPU       : {}", cpu_model);
     }
-    
+
     if let Ok(gpu_model) = gpu::get_gpu() {
         println!("GPU       : {}", gpu_model);
     }
