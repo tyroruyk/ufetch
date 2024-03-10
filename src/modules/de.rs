@@ -13,8 +13,6 @@ pub fn get_de() -> io::Result<String> {
         Ok(de)
     } else if let Ok(de) = env::var("SESSION_DESKTOP") {
         Ok(de)
-    } else if let Ok(de) = env::var("home") {
-        Ok(de)
     } else {
         Ok("N/A".to_string())
     }

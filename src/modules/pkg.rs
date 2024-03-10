@@ -60,5 +60,16 @@ pub fn get_pkg() -> io::Result<String> {
         }
     }
 
+    if Path::new("/bin/xbps-install").exists() {
+        let output = Command::new("sh")
+            .arg("-c")
+            .arg(format!("xbps-query -l | wc -l"))
+            .output()?;
+
+        if String::from_utf8_lossy(&output.stdout).trim().parse::<i32>().unwrap() != 0 {
+            result += &format!("{} (xbps) ", String::from_utf8_lossy(&output.stdout).trim());
+        }
+    }
+
     Ok(result)
 }
